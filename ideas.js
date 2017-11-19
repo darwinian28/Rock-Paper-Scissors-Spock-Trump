@@ -14,22 +14,46 @@ var whatBeatsWhat = {
   'Trump': ['Spock','Paper'],
 };
 
-var userChoice = getUserInput();
+var userActions = document.querySelectorAll(".user-actions button");
 
-var computerChoice = getComputerChoice();
+for (var i=0; i < userActions.length; i++){
+   var currentAction = userActions[i];
+   currentAction.addEventListener("click",function(event){
+     var clickedButton = event.target;
+     var userChoice = clickedButton.textContent;
+     var computerChoice = getComputerChoice();
+     setUserSelectionTo(userChoice);
+     setComputerSelectionTo(computerChoice);
 
-  console.log('Computer chose ' + computerChoice);
-
-if (getActionsBeatenBy(userChoice).includes(computerChoice)){
-  console.log('User wins');
+     if (getActionsBeatenBy(userChoice).includes(computerChoice)){
+       setWinnerTo('User');
+     }
+     else if (getActionsBeatenBy(computerChoice).includes(userChoice)){
+       setWinnerTo('Computer');
+     }
+     else {
+       setWinnerTo('Draw');
+     }
+   });
+}
+function setUserSelectionTo(action) {
+  /*Update the user interface with the option the juser selected.*/
+  var userChoiceOutput = document.getElementById("user-choice");
+  userChoiceOutput.textContent = action;
 }
 
-else if (getActionsBeatenBy(computerChoice).includes(userChoice)){
-  console.log('Computer wins');
+function setComputerSelectionTo(action) {
+  /* Update the user interface with the option the computer selected*/
+  var computerChoiceOutput = document.getElementById("computer-choice");
+  computerChoiceOutput.textContent = action;
 }
-else {
-  console.log('Draw');
+
+function setWinnerTo(result) {
+    /* Update the user interface with the winner of the game*/
+  var winnerOutput = document.getElementById("winner");
+  winnerOutput.textContent = result;
 }
+
 
 function getActionsBeatenBy(action){
   /* Get a list of actions that a given action beats.
@@ -39,26 +63,6 @@ function getActionsBeatenBy(action){
   */
   return whatBeatsWhat[action];
 
-}
-function getUserInput(){
-  /*
-  Will get the user's input and make sure it is valid
-  */
-
-  var isValidInput = false;
-  var userChoice;
-  var validOptions = Object.keys(whatBeatsWhat);
-
-  while (isValidInput === false) {
-     userChoice = prompt('Enter '+ validOptions.join(', '));
-     isValidInput= validOptions.includes(userChoice);
-
-     if (!isValidInput) {
-        console.log('Please only enter a valid option');
-      }
-  }
-
-  return userChoice;
 }
 
 function getComputerChoice(){
