@@ -26,7 +26,7 @@ for (var i=0; i < userActions.length; i++){
      setComputerSelectionTo(computerChoice);
 
      if (getActionsBeatenBy(userChoice).includes(computerChoice)){
-       setWinnerTo('User');
+       setWinnerTo('You');
      }
      else if (getActionsBeatenBy(computerChoice).includes(userChoice)){
        setWinnerTo('Computer');
