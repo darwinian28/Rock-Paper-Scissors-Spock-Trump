@@ -52,6 +52,7 @@ function setWinnerTo(result) {
     /* Update the user interface with the winner of the game*/
   var winnerOutput = document.getElementById("winner");
   winnerOutput.textContent = result;
+  winnerOutput.classList.add('blink');
 }
 
 
